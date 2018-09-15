@@ -31,7 +31,7 @@ jobs:
           - v1-dependencies-
 
       - run: 
-        command: | 
+          command: | 
             mvn dependency:go-offline
             sudo apt-get install golang-go
 
@@ -39,7 +39,7 @@ jobs:
           paths:
             - ~/.m2
           key: v1-dependencies-{{ checksum "pom.xml" }}
-        
+
       - run: mvn package -Dci-build=true
 
       - deploy:
