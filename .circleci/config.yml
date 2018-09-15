@@ -34,7 +34,6 @@ jobs:
         command: | 
             mvn dependency:go-offline
             sudo apt-get install golang-go
-            export GOPATH=$HOME/go
 
       - save_cache:
           paths:
@@ -46,6 +45,8 @@ jobs:
       - deploy:
           name: Deploy
           command: |
+            mkdir ~/go
+            export GOPATH=~/go
             go get github.com/tcnksm/ghr
             ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME -prerelease -b 'Nightly release - Use caution!' `echo "v0.0.1-nightly-$(git rev-parse --short=7 HEAD)"` ci/
 
