@@ -31,14 +31,21 @@ jobs:
           - v1-dependencies-
 
       - run: mvn dependency:go-offline
+      
+      - run: apt-get install golang-go
 
       - save_cache:
           paths:
             - ~/.m2
           key: v1-dependencies-{{ checksum "pom.xml" }}
         
-      - run:
-          name: Cut new release
+      - run: mvn package -Dci-build=true
+
+      - deploy:
+          name: Deploy
           command: |
             go get github.com/tcnksm/ghr
             ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME -prerelease -b 'Nightly release - Use caution!' `echo "v0.0.1-nightly-$(git rev-parse --short=7 HEAD)"` ci/
+
+      - store_artifacts:
+          path: ci/
