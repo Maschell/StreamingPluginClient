@@ -30,9 +30,11 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run: mvn dependency:go-offline
-      
-      - run: sudo apt-get install golang-go
+      - run: 
+        command: | 
+            mvn dependency:go-offline
+            sudo apt-get install golang-go
+            export GOPATH=$HOME/go
 
       - save_cache:
           paths:
