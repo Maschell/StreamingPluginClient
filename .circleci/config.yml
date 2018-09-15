@@ -37,5 +37,8 @@ jobs:
             - ~/.m2
           key: v1-dependencies-{{ checksum "pom.xml" }}
         
-      # run tests!
-      - run: mvn package -Dci-build=true
+      - run:
+          name: Cut new release
+          command: |
+            go get github.com/tcnksm/ghr
+            ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME -prerelease -b 'Nightly release - Use caution!' `echo "v0.0.1-nightly-$(git rev-parse --short=7 HEAD)"` ci/
