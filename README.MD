@@ -16,3 +16,7 @@ This is a maven project. Use following command to create a .jar with dependencie
 ```
 mvn package
 ```
+
+# Used libraries
+- [lombok](https://projectlombok.org/)  
+- [commons-cli](https://commons.apache.org/proper/commons-cli/)
