@@ -33,7 +33,9 @@ jobs:
       - run: 
           command: | 
             mvn dependency:go-offline
-            sudo apt-get install golang-go
+            sudo add-apt-repository ppa:gophers/archive
+            sudo apt-get update
+            sudo apt-get install golang-1.10-go
 
       - save_cache:
           paths:
