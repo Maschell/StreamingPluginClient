@@ -24,7 +24,7 @@ jobs:
       - checkout
 
       # Download and cache dependencies
-      - restore_cache:
+      - restore_cache: 
           keys:
           - v1-dependencies-{{ checksum "pom.xml" }}
           # fallback to using the latest cache if no exact match is found
@@ -32,7 +32,7 @@ jobs:
 
       - run: mvn dependency:go-offline
       
-      - run: apt-get install golang-go
+      - run: sudo apt-get install golang-go
 
       - save_cache:
           paths:
