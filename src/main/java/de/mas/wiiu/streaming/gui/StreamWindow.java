@@ -39,7 +39,7 @@ public class StreamWindow {
 
     public StreamWindow(IImageProvider imageProvider) {
     	
-        JFrame editorFrame = new JFrame("Stream");
+        JFrame editorFrame = new JFrame("Wii U Streaming Client");
 
         editorFrame.setMaximumSize(screenSize);
         editorFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
