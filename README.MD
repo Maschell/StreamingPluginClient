@@ -18,5 +18,5 @@ mvn package
 ```
 
 # Used libraries
-- [lombok](https://projectlombok.org/)  
+- [lombok](https://projectlombok.org/)  ([Install to IDE](https://projectlombok.org/setup/overview) too!)
 - [commons-cli](https://commons.apache.org/proper/commons-cli/)
