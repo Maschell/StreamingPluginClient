@@ -40,80 +40,80 @@ import de.mas.wiiu.streaming.gui.StreamWindow;
 
 public class Main {
 
-	public static void main(String[] args) throws Exception {
-		if(GraphicsEnvironment.isHeadless()) {
-			System.out.println("This program does not support running in a headless environment!");
-			System.exit(2);
-		}else {
-			String ip = null;
-			if(args.length != 0) {
-				CommandLineParser parser = new DefaultParser();
+    public static void main(String[] args) throws Exception {
+        if(GraphicsEnvironment.isHeadless()) {
+            System.out.println("This program does not support running in a headless environment!");
+            System.exit(2);
+        }else {
+            String ip = null;
+            if(args.length != 0) {
+                CommandLineParser parser = new DefaultParser();
 
-				Options options = new Options();
-				options.addOption("ip", "ip", true, "IP address of your Wii U Console.");
-				
-				CommandLine line = parser.parse(options, args, true);
-				
+                Options options = new Options();
+                options.addOption("ip", "ip", true, "IP address of your Wii U Console.");
 
-				if (line.hasOption("ip")) {
-					ip = line.getOptionValue("ip");
-				}else {
-					HelpFormatter formatter = new HelpFormatter();
-					formatter.printHelp("streamingTool", options);
-					System.exit(2);
-				}
-			} else{
-
-				
+                CommandLine line = parser.parse(options, args, true);
 
 
-				//Create a JFrame to show the icon in the taskbar
-				final JFrame frame = new JFrame("Wii U Streaming Client - Enter IP...");
-				frame.setUndecorated( true );
-				frame.setVisible( true );
-				frame.setLocationRelativeTo( null );
+                if (line.hasOption("ip")) {
+                    ip = line.getOptionValue("ip");
+                }else {
+                    HelpFormatter formatter = new HelpFormatter();
+                    formatter.printHelp("streamingTool", options);
+                    System.exit(2);
+                }
+            } else{
 
-				//Display the IP Dialog
-				ip = JOptionPane.showInputDialog(frame, "Please enter the local IP address of your Wii U", "Wii U streaming client", JOptionPane.PLAIN_MESSAGE);
 
-				//Check if user clicked "Cancel"
-				if(ip == null) {
-					System.out.println("Cancelled. Exiting program");
-					frame.dispose();
-					System.exit(0);
-				}
-				//Close the JFrame again
-				frame.dispose();
 
-			}
 
-			try {
-				new Main(ip);
-			} catch (BindException e) {
-				//Create a JFrame to show the icon in the taskbar
-				final JFrame frame = new JFrame("Wii U Streaming Client - "+e.getClass().getName());
-				frame.setUndecorated( true );
-				frame.setVisible( true );
-				frame.setLocationRelativeTo( null );
+                //Create a JFrame to show the icon in the taskbar
+                final JFrame frame = new JFrame("Wii U Streaming Client - Enter IP...");
+                frame.setUndecorated( true );
+                frame.setVisible( true );
+                frame.setLocationRelativeTo( null );
 
-				//Display the Message
-				JOptionPane.showMessageDialog(frame, "Can't bind socket. The client is probably already running.", e.getClass().getName(),
-						JOptionPane.WARNING_MESSAGE);
-				//Close the JFrame again
-				frame.dispose();
+                //Display the IP Dialog
+                ip = JOptionPane.showInputDialog(frame, "Please enter the local IP address of your Wii U", "Wii U streaming client", JOptionPane.PLAIN_MESSAGE);
 
-				System.exit(-1);
-			}
-		}
-	}
+                //Check if user clicked "Cancel"
+                if(ip == null) {
+                    System.out.println("Cancelled. Exiting program");
+                    frame.dispose();
+                    System.exit(0);
+                }
+                //Close the JFrame again
+                frame.dispose();
 
-	public Main(String ip) throws SocketException {
-		ImageStreamer imageStreamer = new ImageStreamer(ip);
+            }
 
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				new StreamWindow(imageStreamer.getImageProvider());
-			}
-		});
-	}
+            try {
+                new Main(ip);
+            } catch (BindException e) {
+                //Create a JFrame to show the icon in the taskbar
+                final JFrame frame = new JFrame("Wii U Streaming Client - "+e.getClass().getName());
+                frame.setUndecorated( true );
+                frame.setVisible( true );
+                frame.setLocationRelativeTo( null );
+
+                //Display the Message
+                JOptionPane.showMessageDialog(frame, "Can't bind socket. The client is probably already running.", e.getClass().getName(),
+                        JOptionPane.WARNING_MESSAGE);
+                //Close the JFrame again
+                frame.dispose();
+
+                System.exit(-1);
+            }
+        }
+    }
+
+    public Main(String ip) throws SocketException {
+        ImageStreamer imageStreamer = new ImageStreamer(ip);
+
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                new StreamWindow(imageStreamer.getImageProvider());
+            }
+        });
+    }
 }

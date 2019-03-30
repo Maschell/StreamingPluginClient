@@ -34,11 +34,11 @@ import javax.swing.JMenuItem;
 import javax.swing.WindowConstants;
 
 public class StreamWindow {
-	private final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    private final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     private final ImagePanel image = new ImagePanel(screenSize.width-15, screenSize.height-100);
 
     public StreamWindow(IImageProvider imageProvider) {
-    	
+
         JFrame editorFrame = new JFrame("Wii U Streaming Client");
 
         editorFrame.setMaximumSize(screenSize);
@@ -46,27 +46,27 @@ public class StreamWindow {
 
         imageProvider.setOnImageChange((bi) -> image.setImage(bi));
         editorFrame.getContentPane().add(image);
-        
+
         JMenuBar menuBar = new JMenuBar();
         editorFrame.getContentPane().add(menuBar, BorderLayout.NORTH);
-        
+
         JMenu mnSettings = new JMenu("Settings");
         menuBar.add(mnSettings);
-        
-        
+
+
         JMenuItem mntmNewMenuItem = new JMenuItem("Config (Not implemented!)");
         mntmNewMenuItem.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		//TODO Add program config
-        	}
+            public void actionPerformed(ActionEvent e) {
+                //TODO Add program config
+            }
         });
         JMenuItem mntmExit = new JMenuItem("Exit");
         mntmExit.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		System.exit(0);
-        	}
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
         });
-        
+
         mntmNewMenuItem.setEnabled(false);
         mnSettings.add(mntmNewMenuItem);
         mnSettings.add(mntmExit);
