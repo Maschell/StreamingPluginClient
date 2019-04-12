@@ -21,18 +21,55 @@
  *******************************************************************************/
 
 package de.mas.wiiu.streaming.gui;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.WindowConstants;
 
 public class StreamWindow {
-    private final ImagePanel image = new ImagePanel(1280, 720);
+    private final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    private final ImagePanel image = new ImagePanel(screenSize.width-15, screenSize.height-100);
 
     public StreamWindow(IImageProvider imageProvider) {
-        JFrame editorFrame = new JFrame("Stream");
+
+        JFrame editorFrame = new JFrame("Wii U Streaming Client");
+
+        editorFrame.setMaximumSize(screenSize);
         editorFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         imageProvider.setOnImageChange((bi) -> image.setImage(bi));
-        editorFrame.add(image);
+        editorFrame.getContentPane().add(image);
+
+        JMenuBar menuBar = new JMenuBar();
+        editorFrame.getContentPane().add(menuBar, BorderLayout.NORTH);
+
+        JMenu mnSettings = new JMenu("Settings");
+        menuBar.add(mnSettings);
+
+
+        JMenuItem mntmNewMenuItem = new JMenuItem("Config (Not implemented!)");
+        mntmNewMenuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                //TODO Add program config
+            }
+        });
+        JMenuItem mntmExit = new JMenuItem("Exit");
+        mntmExit.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+
+        mntmNewMenuItem.setEnabled(false);
+        mnSettings.add(mntmNewMenuItem);
+        mnSettings.add(mntmExit);
 
         editorFrame.pack();
         editorFrame.setLocationRelativeTo(null);
