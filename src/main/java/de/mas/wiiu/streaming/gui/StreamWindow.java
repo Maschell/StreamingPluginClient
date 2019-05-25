@@ -23,11 +23,13 @@
 package de.mas.wiiu.streaming.gui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -36,7 +38,7 @@ import javax.swing.WindowConstants;
 public class StreamWindow {
     private final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     private final ImagePanel image = new ImagePanel(screenSize.width-15, screenSize.height-100);
-
+    private final JLabel lblFps = new JLabel("     FPS: Not Connected!");
     public StreamWindow(IImageProvider imageProvider) {
 
         JFrame editorFrame = new JFrame("Wii U Streaming Client");
@@ -70,10 +72,17 @@ public class StreamWindow {
         mntmNewMenuItem.setEnabled(false);
         mnSettings.add(mntmNewMenuItem);
         mnSettings.add(mntmExit);
+        
+       
+        lblFps.setFont(new Font("Tahoma", Font.PLAIN, 11));
+        menuBar.add(lblFps);
 
         editorFrame.pack();
         editorFrame.setLocationRelativeTo(null);
         editorFrame.setVisible(true);
     }
-
+    public void setFps(int fps){
+        if(fps == -1) this.lblFps.setText("     FPS: Not Connected!");
+        else this.lblFps.setText("     FPS: "+fps);
+    }
 }

@@ -39,7 +39,7 @@ import org.apache.commons.cli.Options;
 import de.mas.wiiu.streaming.gui.StreamWindow;
 
 public class Main {
-
+    public static StreamWindow win;
     public static void main(String[] args) throws Exception {
         if(GraphicsEnvironment.isHeadless()) {
             System.out.println("This program does not support running in a headless environment!");
@@ -112,7 +112,7 @@ public class Main {
 
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                new StreamWindow(imageStreamer.getImageProvider());
+                win = new StreamWindow(imageStreamer.getImageProvider());
             }
         });
     }
