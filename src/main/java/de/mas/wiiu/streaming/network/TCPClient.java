@@ -62,6 +62,7 @@ final public class TCPClient {
     public boolean abort() {
         try {
             sock.close();
+            log.info("TCP client closed");
         } catch (IOException e) {
             log.info(e.getMessage()); // TODO: handle
             return false;

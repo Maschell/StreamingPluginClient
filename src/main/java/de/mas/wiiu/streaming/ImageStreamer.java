@@ -84,8 +84,9 @@ public class ImageStreamer {
             while (true) {
                 if (tcpClient.isConnected()) {
                     System.out.println("FPS:" + framesThisSecond);
+                    if(Main.win != null) Main.win.setFps(framesThisSecond);
                     framesThisSecond = 0;
-                }
+                }else if(Main.win != null) Main.win.setFps(-1);
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
@@ -102,7 +103,15 @@ public class ImageStreamer {
             tcpClient.send(rawCommand);
             result = true;
         } catch (Exception e) {
+            e.printStackTrace();
             result = false;
+            tcpClient.abort();
+            try {
+                tcpClient.connect();
+            } catch (IOException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
         }
 
         return result;
@@ -141,18 +150,18 @@ public class ImageStreamer {
     @Synchronized("lock")
     private void udpDataHandler(byte[] data) {
         if (state == DataState.UNKNOWN) {
-            // System.out.println("GET CRC");
+//             System.out.println("GET CRC");
+//             System.out.println("data.length = "+data.length);
             if (data.length == 4) {
                 ByteBuffer wrapped = ByteBuffer.wrap(data); // big-endian by default
                 curcrc32 = wrapped.getInt(); // 1
                 state = DataState.CRC32_RECEIVED;
             } else {
-
                 state = DataState.UNKNOWN;
                 return;
             }
         } else if (state == DataState.CRC32_RECEIVED) {
-            // System.out.println("GET Size");
+//             System.out.println("GET Size");
             if (data.length == 8) {
                 ByteBuffer wrapped = ByteBuffer.wrap(data); // big-endian by default
                 curJPEGSize = (int) wrapped.getLong();
@@ -165,7 +174,7 @@ public class ImageStreamer {
                 return;
             }
         } else if (state == DataState.RECEIVING_IMAGE) {
-            // System.out.println("GET IMAGE");
+//             System.out.println("GET IMAGE");
             System.arraycopy(data, 0, jpegBuffer, curLenPos, data.length > curJPEGSize ? curJPEGSize : data.length);
 
             curJPEGSize -= data.length;
