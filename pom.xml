@@ -1,13 +1,14 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>StreamingPluginClient</groupId>
 	<artifactId>StreamingPluginClient</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	
+
 	<name>StreamingPluginClient</name>
 	<url>https://github.com/Maschell/StreamingPluginClient</url>
-	
+
 	<profiles>
 		<profile>
 			<id>normal-build</id>
@@ -30,7 +31,7 @@
 				<jar_dir>./ci</jar_dir>
 			</properties>
 		</profile>
-</profiles>
+	</profiles>
 
 	<build>
 		<sourceDirectory>src</sourceDirectory>
@@ -49,23 +50,23 @@
 					<execution>
 						<id>make-assembly</id>
 						<configuration>
-		                    <archive>
-		                        <manifest>
-		                            <mainClass>de.mas.wiiu.streaming.Main</mainClass>
-		                        </manifest>
-		                    </archive>
-		                    <descriptorRefs>
-		                        <descriptorRef>jar-with-dependencies</descriptorRef>
-		                    </descriptorRefs>
-		                    <!-- Stick jar in root dir, if you want -->
-		                    <outputDirectory>${jar_dir}</outputDirectory>
-		                    <finalName>StreamingPluginClient-${project.version}-nightly</finalName>
-		                </configuration>
+							<archive>
+								<manifest>
+									<mainClass>de.mas.wiiu.streaming.Main</mainClass>
+								</manifest>
+							</archive>
+							<descriptorRefs>
+								<descriptorRef>jar-with-dependencies</descriptorRef>
+							</descriptorRefs>
+							<!-- Stick jar in root dir, if you want -->
+							<outputDirectory>${jar_dir}</outputDirectory>
+							<finalName>StreamingPluginClient-${project.version}-nightly</finalName>
+						</configuration>
 						<phase>package</phase>
 						<goals>
 							<goal>attached</goal>
 						</goals>
-					</execution>					
+					</execution>
 				</executions>
 			</plugin>
 		</plugins>
@@ -74,7 +75,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.16.20</version>
+			<version>1.18.6</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/commons-cli/commons-cli -->
 		<dependency>
